@@ -26,45 +26,21 @@
     }
     </style>
 </head>
-<body>
+<body onload="display()">
 
     <div id="pond">
 
-        <div class="card">
-            <img src="http://localhost:8080/ducks/1/image" alt="Avatar" />
-            <div class="container">
-                <h4><b>1</b></h4>
-                <p>Mallard</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <img src="http://localhost:8080/ducks/5/image" alt="Avatar" />
-            <div class="container">
-                <h4><b>5</b></h4>
-                <p>Mallard</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <img src="http://localhost:8080/ducks/4/image" alt="Avatar" />
-            <div class="container">
-                <h4><b>4</b></h4>
-                <p>Redhead</p>
-            </div>
-        </div>
-
     </div>
-   
-  
-  
+
     <script>
+        let host = "http://localhost:8080";
         let ducks = [];
     
        async function display() { 
          if (ducks.length == 0) {
            ducks = await getAll();
          }
+         
     
          let table = document.getElementById("pond");
          table.innerHTML = "";
@@ -72,17 +48,24 @@
          for (let duck of ducks) {
             let row = document.createElement("div");
             row.classList.add("card");
+
             let im = document.createElement("img");
+            im.src=host+ "/ducks/" + duck.id + "/image";
+            row.appendChild(im);
 
-
-            let cell1 = document.createElement("td");
+            let h = document.createElement("h4");
+            let b = document.createElement("b");
             let id = document.createTextNode(duck.id);
-            cell1.appendChild(id);
-            row.appendChild(cell1);
-            let cell2 = document.createElement("td");
+            b.appendChild(id);
+            h.appendChild(b);
+            row.appendChild(h);
+
+            let p = document.createElement("p");
             let type = document.createTextNode(duck.type);
-            cell2.appendChild(type);
-            row.appendChild(cell2);
+            p.appendChild(type);
+            row.appendChild(p);
+
+
             table.appendChild(row);
         }
        }
@@ -90,7 +73,6 @@
     
     
        async function getAll() {
-         let host = "http://localhost:8080";
     
          let request = {
            method: "GET",
