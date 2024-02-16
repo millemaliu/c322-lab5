@@ -53,17 +53,22 @@
             im.src=host+ "/ducks/" + duck.id + "/image";
             row.appendChild(im);
 
+            let div = document.createElement("div");
+            div.classList.add("container");
+
             let h = document.createElement("h4");
             let b = document.createElement("b");
             let id = document.createTextNode(duck.id);
             b.appendChild(id);
             h.appendChild(b);
-            row.appendChild(h);
+            div.appendChild(h);
 
             let p = document.createElement("p");
             let type = document.createTextNode(duck.type);
             p.appendChild(type);
-            row.appendChild(p);
+            div.appendChild(p);
+
+            row.appendChild(div);
 
 
             table.appendChild(row);
