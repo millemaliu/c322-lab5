@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ducks Pond</title>
+    <style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        width: 20%;
+        border-radius: 5px;
+    }
+
+    .card:hover {
+        box-shadow: 0 8 px 16px 0 rgba(0,0,0,0.2);
+    }
+
+    img {
+        border-radius: 5px;
+        width: 100%;
+    }
+
+    .container {
+        padding: 2px 16px;
+    }
+    </style>
+</head>
+<body>
+
+    <div id="pond">
+
+        <div class="card">
+            <img src="http://localhost:8080/ducks/1/image" alt="Avatar" />
+            <div class="container">
+                <h4><b>1</b></h4>
+                <p>Mallard</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="http://localhost:8080/ducks/5/image" alt="Avatar" />
+            <div class="container">
+                <h4><b>5</b></h4>
+                <p>Mallard</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="http://localhost:8080/ducks/4/image" alt="Avatar" />
+            <div class="container">
+                <h4><b>4</b></h4>
+                <p>Redhead</p>
+            </div>
+        </div>
+
+    </div>
+   
+  
+  
+    <script>
+        let ducks = [];
+    
+       async function display() { 
+         if (ducks.length == 0) {
+           ducks = await getAll();
+         }
+    
+         let table = document.getElementById("pond");
+         table.innerHTML = "";
+         
+         for (let duck of ducks) {
+            let row = document.createElement("div");
+            row.classList.add("card");
+            let im = document.createElement("img");
+
+
+            let cell1 = document.createElement("td");
+            let id = document.createTextNode(duck.id);
+            cell1.appendChild(id);
+            row.appendChild(cell1);
+            let cell2 = document.createElement("td");
+            let type = document.createTextNode(duck.type);
+            cell2.appendChild(type);
+            row.appendChild(cell2);
+            table.appendChild(row);
+        }
+       }
+    
+    
+    
+       async function getAll() {
+         let host = "http://localhost:8080";
+    
+         let request = {
+           method: "GET",
+           headers: {
+             "Content-Type": "application/json"
+           }
+         }
+         let response = await fetch(host + "/ducks", request); 
+    
+         return response.json();
+    
+    
+       }
+     </script>
+</body>
+</html>
